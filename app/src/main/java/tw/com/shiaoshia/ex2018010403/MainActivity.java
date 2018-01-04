@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv;
     EditText et;
     TextView tv2;
-
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         data.add("BB22");
         data.add("CC33");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+        adapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_expandable_list_item_1,data);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -49,13 +49,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    public void click01(View v) {
+
+    //新增加Spinner內容
+    public void click02(View v) {
         data.add(et.getText().toString());
+        adapter.notifyDataSetChanged(); //更新Spinner畫面
     }
 
-    public void click02(View v) {
+    //顯示選的Spinner內容
+    public void click01(View v) {
 
         int pos = spinner.getSelectedItemPosition();
         tv2.setText(data.get(pos));
+
+    }
+
+    //刪除點選的Spinner內容;
+    public void click03(View v) {
+
+        if (!data.isEmpty()) {
+            data.remove(spinner.getSelectedItemPosition());
+            adapter.notifyDataSetChanged(); //更新Spinner畫面
+        }
     }
 }
